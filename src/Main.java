@@ -9,7 +9,6 @@ public class Main {
 
         while (true) {
             Thread.sleep(500);
-            System.out.println("123");
         }
     }
 }
