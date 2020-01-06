@@ -5,6 +5,10 @@ public class Capitalist extends Person{
         super(name, balance);
     }
 
+    @Override
+    public void buy(Fabrique fabrique) {
+
+    }
 }
 
 

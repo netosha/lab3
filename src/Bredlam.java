@@ -1,24 +1,24 @@
+import java.util.List;
+
+
 public class Bredlam {
-    private Fabrique[] fabriques;
+    public List<Fabrique> fabriques;
+    public Products product;
 
-    Bredlam(Fabrique[] fabriques){
+    Bredlam(Products product, List<Fabrique> fabriques) {
         this.fabriques = fabriques;
+        this.product = product;
     }
 
-    public void setMaxPayoutPrice(float price){
-        for(Fabrique f : this.fabriques){
-            f.setMaxPayout(price);
-        }
-    }
-
-    public void setSellPrice(float price){
-        for(Fabrique f : this.fabriques){
+    public void setSellPrice(float price) {
+        // Устанавливаем цену на продукцию.
+        for(Fabrique f : this.fabriques) {
             f.setSellPrice(price);
         }
     }
 
     @Override
     public String toString() {
-        return "Ебучий "+this.fabriques[0].productType+" бредлам с "+fabriques.length+" фабриками";
+        return "Ебучий "+this.fabriques.get(0).productType+" бредлам с "+fabriques.size()+" фабриками";
     }
 }
