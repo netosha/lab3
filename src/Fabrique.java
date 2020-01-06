@@ -1,13 +1,15 @@
 import java.util.List;
+import java.util.Random;
 
 public class Fabrique {
-    private float payoutCoef = (float) 0.5; // Коэфициент выплаты рабочим от каждой продажи
-    final float BASE_PRODUCT_PRICE_COEF = (float) 0.1; // Процент от sellPrice, который идет на закупку товара
     public Products productType;
     public Capitalist owner;
     public List<Worker> workers;
     private int productCount;
-    private float sellPrice; // Цена, по которой продается productType
+
+    Random random = new Random();
+    private float sellPrice = 20 + random.nextInt(20); // Цена, по которой продается productType
+    private float payoutPrice;
 
     Fabrique(Products productType, Capitalist owner, List<Worker> workers){
         this.productType = productType;
@@ -29,27 +31,28 @@ public class Fabrique {
         // а остальное отдаем владельцу фабрики
 
         // Отдаем часть денег от продажи рабочим
-        float payoutToWorkers = this.sellPrice * this.payoutCoef;
         for(Worker worker:this.workers){
-            worker.getMoney(payoutToWorkers / this.workers.size());
+            worker.income(this.payoutPrice);
         }
 
         // Выплата владельцу = Цена продажи - выплата работникам - себестоимость
-        owner.getMoney(this.sellPrice - payoutToWorkers - (this.sellPrice * this.BASE_PRODUCT_PRICE_COEF));
+        owner.income(this.sellPrice - payoutPrice);
 
     }
 
-    public void setPayoutCoef(float coef){
-        this.payoutCoef = coef;
+    public void setPayoutPrice(float price){
+        this.payoutPrice = price;
     }
 
     public void setSellPrice(float sellPrice){
-        if(sellPrice < 0) {
-            this.sellPrice = 0;
-        } else {
-            this.sellPrice = sellPrice;
-        }
+        this.sellPrice = sellPrice;
     }
 
     public float getSellPrice() {return this.sellPrice;}
+
+    @Override
+    public String toString() {
+       
+        return "Фабрика "+this.productType+", цена продукции которой "+this.sellPrice;
+    }
 }

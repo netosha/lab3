@@ -1,3 +1,6 @@
 public interface Payable {
-    void buy(Fabrique fabrique);
+    void income(float amount);
+
+    void charge(float amount);
+
 }

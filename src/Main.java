@@ -10,7 +10,7 @@ public class Main {
 
         Random random = new Random();
 
-        List<String> names = Arrays.asList("Спрутс", "Мебельный гигант", "Серега", "Господин Дуб", "Шишкин");
+        List<String> names = Arrays.asList("Спрутс", "Мебельный гигант", "Серужан", "Господин Дуб", "Шишкин", "Ержан");
 
         // Создаем капиталиста с рандомным балансом
         Capitalist cap = new Capitalist(names.get(random.nextInt(names.size())), 5000000 + random.nextInt(50000));
@@ -41,17 +41,64 @@ public class Main {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+        Random random = new Random();
+        // Объеденяемся в сообщества
         List<Bredlam> bredlams = new ArrayList<>();
         for(Products product:Products.values()){
-            Bredlam bredlam = new Bredlam(product, createFabriques(product, 2));
+            Bredlam bredlam = new Bredlam(product, createFabriques(product, 1));
             bredlams.add(bredlam);
         }
 
+        // Собираем всех капиталистов
+        List<Capitalist> capitalists = new ArrayList<>();
+        int workersCount = 0;
         for(Bredlam bredlam:bredlams){
-            System.out.println(bredlam.toString());
+            List<Capitalist> capitalistsInBredlam = bredlam.getCapitalists();
+            workersCount += bredlam.getWorekrsCount();
+            for(Capitalist cap:capitalistsInBredlam){
+                System.out.println(cap.toString()+" прибыл на встречу.");
+            }
+            capitalists.addAll(capitalistsInBredlam);
         }
+        
+
+        // Договариваемся какую плату платить рабочим и почем продавать товар
+        float totalPayout = 0;
+        
+       
+       
 
         
+        for(Capitalist capitalist:capitalists) {
+            // Скидываемся в общак для общей зарплаты
+            float payoutRatio = (float) (0.02 + random.nextFloat() * (0.15 - 0.02));
+            float payoutAmount = capitalist.balance * payoutRatio;
+            capitalist.charge(payoutAmount);
+            System.out.println(capitalist+" скинулся в общак "+payoutAmount);
+            totalPayout += payoutAmount;
+            
+        }
+        
+        // (!!!) Эрик, придумай как они будут придумывать цену на все продукты
+        /*{
+            float sugarPrice = (float) (30 + random.nextFloat() * 20); // От 30 до 50 рублей (30 + [0;1)*20 )
+            float breadPrice =(float) (20 + random.nextFloat() * 10); // От 20 до 30 рублей (20 + [0;1)*10 )
+            float cheesePrice = (float) (100 + random.nextFloat() * 100); // От 100 до 200 рублей (100 + [0;1)*100 )
+            float leatherPrice = (float) (500 + random.nextFloat() * 1000); // От 500 до 1500 рублей (500 + [0;1)*1000 )
+            float coalPrice = (float) (100 + random.nextFloat() * 300); // От 100 до 400 рублей (100 + [0;1)*300 )
+        }*/
+
+
+        // Устанавливаем зарплату рабочим
+        for(Bredlam bredlam:bredlams){
+            bredlam.setPayoutPrice(totalPayout/workersCount);
+            float sellPrice = 10+random.nextInt(40);
+            bredlam.setSellPrice(sellPrice);
+            System.out.println("Капиталисты установили цену в "+sellPrice+" тугриков на "+bredlam.product);
+        }
+
+        System.out.println("Капиталисты установили зарплату в "+totalPayout/workersCount);
+
     }
 }

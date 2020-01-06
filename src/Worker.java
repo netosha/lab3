@@ -1,10 +1,10 @@
-public class Worker extends Person {
+public class Worker extends Person implements Payable{
     private float disappointment = 50;
 
     public Worker(String name, float balance){
         super(name, balance);
     }
-    
+
     public void addDisappointment(int disappointment){
         if(this.disappointment >= 100){
             this.disappointment = 100;
@@ -16,5 +16,17 @@ public class Worker extends Person {
         System.out.println("Рабочий "+super.name + " разозлился");
         // System.out.println(String.format("Рабочий %s разозлился до %i", {super.name, super}));
 
+    }
+
+	@Override
+    public void charge(float amount) {
+        // Для штрафа, например, тупо списывает бабки
+        this.balance -= amount;
+        
+    }
+
+    @Override
+    public void income(float amount) {
+        this.balance += amount;
     }
 }
