@@ -52,10 +52,13 @@ public class Main {
 
         // Собираем всех капиталистов
         List<Capitalist> capitalists = new ArrayList<>();
-        int workersCount = 0;
+        List<Worker> workers = new ArrayList<>();
+        List<Fabrique> fabriques = new ArrayList<>();
+
         for(Bredlam bredlam:bredlams){
             List<Capitalist> capitalistsInBredlam = bredlam.getCapitalists();
-            workersCount += bredlam.getWorekrsCount();
+            workers.addAll(bredlam.getWorekrs());
+            fabriques.addAll(bredlam.getFabriques());
             for(Capitalist cap:capitalistsInBredlam){
                 System.out.println(cap.toString()+" прибыл на встречу.");
             }
@@ -65,10 +68,6 @@ public class Main {
 
         // Договариваемся какую плату платить рабочим и почем продавать товар
         float totalPayout = 0;
-        
-       
-       
-
         
         for(Capitalist capitalist:capitalists) {
             // Скидываемся в общак для общей зарплаты
@@ -92,13 +91,24 @@ public class Main {
 
         // Устанавливаем зарплату рабочим
         for(Bredlam bredlam:bredlams){
-            bredlam.setPayoutPrice(totalPayout/workersCount);
+            bredlam.setPayoutPrice(totalPayout/workers.size());
             float sellPrice = 10+random.nextInt(40);
             bredlam.setSellPrice(sellPrice);
-            System.out.println("Капиталисты установили цену в "+sellPrice+" тугриков на "+bredlam.product);
+            System.out.println("Капиталисты установили цену в "+sellPrice+" тугриков на "+bredlam.getProduct());
         }
 
-        System.out.println("Капиталисты установили зарплату в "+totalPayout/workersCount);
+        System.out.println("Капиталисты установили зарплату в "+totalPayout/workers.size());
 
+        // Рабочие работают
+        for(Bredlam bredlam:bredlams){
+            for (Fabrique fabrique:bredlam.getFabriques()){
+                workers = fabrique.getWorkers();
+                for(Worker worker:workers){
+                    worker.work(fabrique);
+                    Fabrique toBuyFabrique = fabriques.get(random.nextInt(fabriques.size())); // Фабрика, на которой рабочий покупает продукт
+                    worker.buyProduct(toBuyFabrique, toBuyFabrique.getProductType());
+                }
+            }
+        }
     }
 }

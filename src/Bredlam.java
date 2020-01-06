@@ -3,8 +3,8 @@ import java.util.List;
 
 
 public class Bredlam {
-    public List<Fabrique> fabriques;
-    public Products product;
+    private List<Fabrique> fabriques;
+    private Products product;
 
     Bredlam(Products product, List<Fabrique> fabriques) {
         this.fabriques = fabriques;
@@ -33,14 +33,21 @@ public class Bredlam {
         return capitalists;
     }
 
-    public int getWorekrsCount(){
-        int count = 0;
+    public List<Worker> getWorekrs(){
+        List<Worker> workers = new ArrayList<>();
         for(Fabrique fab:this.fabriques){
-            count += fab.workers.size();
+            workers.addAll(fab.getWorkers());
         }
-        return count;
+        return workers;
     }
     
+    public Products getProduct(){
+        return this.product;
+    }
+
+    public List<Fabrique> getFabriques(){
+        return this.fabriques;
+    }   
 
     @Override
     public String toString() {

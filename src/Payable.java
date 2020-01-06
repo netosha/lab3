@@ -3,4 +3,5 @@ public interface Payable {
 
     void charge(float amount);
 
+    void buyProduct(Fabrique fabrique, Products product);
 }

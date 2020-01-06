@@ -2,7 +2,7 @@
 public class Capitalist extends Person implements Payable{
 
     public Capitalist(String name, float balance){
-        super(name, balance);
+        super(name, balance, 10);
     }
 
   
@@ -21,6 +21,12 @@ public class Capitalist extends Person implements Payable{
     @Override
     public void income(float amount) {
         this.balance += amount;
+    }
+
+    @Override
+    public void buyProduct(Fabrique fabrique, Products product) {
+        // TODO Auto-generated method stub
+
     }
 }
 

@@ -4,8 +4,8 @@ import java.util.Random;
 public class Fabrique {
     public Products productType;
     public Capitalist owner;
-    public List<Worker> workers;
-    private int productCount;
+    private List<Worker> workers;
+    private int productCount=100;
 
     Random random = new Random();
     private float sellPrice = 20 + random.nextInt(20); // Цена, по которой продается productType
@@ -19,6 +19,14 @@ public class Fabrique {
 
     public Products getProductType() {
         return this.productType;
+    }
+
+    public List<Worker> getWorkers(){
+        return this.workers;
+    }
+
+    public void makeProduct(){
+        this.productCount +=1;
     }
 
     public void sellProduct(){
