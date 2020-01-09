@@ -79,14 +79,13 @@ public class Main {
             
         }
         
-        // (!!!) Эрик, придумай как они будут придумывать цену на все продукты
-        /*{
-            float sugarPrice = (float) (30 + random.nextFloat() * 20); // От 30 до 50 рублей (30 + [0;1)*20 )
+        {
+            float sugarPrice = (float) (30 + random.nextFloat() * 20); // От 30 до 50 рублей (30 + [0;1)*20 ) Коэф 1
             float breadPrice =(float) (20 + random.nextFloat() * 10); // От 20 до 30 рублей (20 + [0;1)*10 )
             float cheesePrice = (float) (100 + random.nextFloat() * 100); // От 100 до 200 рублей (100 + [0;1)*100 )
             float leatherPrice = (float) (500 + random.nextFloat() * 1000); // От 500 до 1500 рублей (500 + [0;1)*1000 )
             float coalPrice = (float) (100 + random.nextFloat() * 300); // От 100 до 400 рублей (100 + [0;1)*300 )
-        }*/
+        }
 
 
         // Устанавливаем зарплату рабочим
@@ -104,11 +103,18 @@ public class Main {
             for (Fabrique fabrique:bredlam.getFabriques()){
                 workers = fabrique.getWorkers();
                 for(Worker worker:workers){
-                    worker.work(fabrique);
-                    Fabrique toBuyFabrique = fabriques.get(random.nextInt(fabriques.size())); // Фабрика, на которой рабочий покупает продукт
-                    worker.buyProduct(toBuyFabrique, toBuyFabrique.getProductType());
+                    worker.work(fabrique); // Сначала работает
+                    Fabrique toBuyFabrique = fabriques.get(random.nextInt(fabriques.size()));   // Выбираем фабрику, на которой купить продукт
+                    worker.buyProduct(toBuyFabrique);       // Покупае продукт
                 }
             }
         }
+
+        /*Worker w1 = new Worker("Вей талик", (float) 200);
+        Worker w2 = new Worker("Вей талик", (float) 200);
+        Integer a = new Integer(5);
+        Integer b = new Integer(5);
+        System.out.println(w2.equals(w1));*/
+
     }
 }
